@@ -4,25 +4,23 @@ const path = require('path');
 
 // Configure AWS SDK
 AWS.config.update({
-  region: 'eu-west-1',
-  accessKeyId: 'client',
-  secretAccessKey: 'np1]Ue77$8X]bN'
+    region: 'eu-west-1',
+    accessKeyId: 'client',
+    secretAccessKey: 'np1]Ue77$8X]bN',
+    endpoint: 'https://lambda.eu-west-1.amazonaws.com'
 });
 
 const app = express();
 const lambda = new AWS.Lambda();
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join('/root/invoke-lambda', 'build')));
 
 app.get('/invoke-lambda', async (req, res) => {
   try {
-    const payload = {
-      // Your JSON payload here
-      message: 'Hello from React!'
-    };
+    const payload = req.query.payload;
 
     const params = {
-      FunctionName: 'YOUR_LAMBDA_FUNCTION_NAME',
+      FunctionName: 'devNitroWalletEth-NitroInvokeLambda398BB8E0-VCz1RJWjE0ik',
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify(payload)
     };
@@ -38,7 +36,7 @@ app.get('/invoke-lambda', async (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join('/root/invoke-lambda', 'build', 'index.html'));
 });
 
 const port = 3000;

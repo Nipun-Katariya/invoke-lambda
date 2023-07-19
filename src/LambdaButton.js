@@ -4,7 +4,8 @@ import AWS from 'aws-sdk';
 AWS.config.update({
   region: 'eu-west-1',
   accessKeyId: 'client',
-  secretAccessKey: 'np1]Ue77$8X]bN'
+  secretAccessKey: 'np1]Ue77$8X]bN',
+  endpoint: 'https://lambda.eu-west-1.amazonaws.com'
 });
 
 const lambda = new AWS.Lambda();
@@ -25,7 +26,7 @@ const invokeLambda = async () => {
   }
 
   const params = {
-    FunctionName: 'YOUR_LAMBDA_FUNCTION_NAME',
+    FunctionName: 'devNitroWalletEth-NitroInvokeLambda398BB8E0-VCz1RJWjE0ik',
     InvocationType: 'RequestResponse',
     Payload: JSON.stringify(payload)
   };
