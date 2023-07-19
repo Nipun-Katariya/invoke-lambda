@@ -1,16 +1,8 @@
 import React from 'react';
-import AWS from 'aws-sdk';
-
-AWS.config.update({
-  region: 'eu-west-1',
-  accessKeyId: 'client',
-  secretAccessKey: 'np1]Ue77$8X]bN',
-  endpoint: 'https://lambda.eu-west-1.amazonaws.com'
-});
-
-const lambda = new AWS.Lambda();
 
 const invokeLambda = async () => {
+  const apiEndpoint = 'https://wcm4919je4.execute-api.eu-west-1.amazonaws.com/default'; // Replace with your API Gateway endpoint
+
   const payload = {
     "operation": "sign_transaction",
     "transaction_payload": {
@@ -23,16 +15,15 @@ const invokeLambda = async () => {
       "maxFeePerGas": 100000000000,
       "maxPriorityFeePerGas": 3000000000
     }
-  }
+  };
 
-  const params = {
-    FunctionName: 'devNitroWalletEth-NitroInvokeLambda398BB8E0-VCz1RJWjE0ik',
-    InvocationType: 'RequestResponse',
-    Payload: JSON.stringify(payload)
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify(payload)
   };
 
   try {
-    const response = await lambda.invoke(params).promise();
+    const response = await fetch(apiEndpoint, requestOptions);
     console.log(response);
   } catch (error) {
     console.error(error);
